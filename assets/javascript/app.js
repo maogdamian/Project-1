@@ -85,4 +85,7 @@ console.log(json);
 
 //Create logic to set preferred theater experience
 
+//Send Email confirmation
 
+// parameters: service_id, template_id, template_parameters
+emailjs.send("default_service","upcoming_movies",{name: "James", movieTitle: "The Avengers", preferredTheater: "AMC 16 Metreon", preferredExperience: "IMAX"});
