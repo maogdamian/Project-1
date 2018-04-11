@@ -31,7 +31,7 @@ var preferredExperience = "";
 
 $('#term').focus(function(){
       var moviePoster = $("#poster").has("img").length ? true : false;
-      if(moviePoster == false){
+      if(moviePoster === false){
          $('#poster').empty();
       }
    });
@@ -39,8 +39,9 @@ $('#term').focus(function(){
    var getPoster = function(){
 
         var film = $('#term').val();
+        console.log("success")
 
-         if(film == ''){
+         if(film === ''){
 
             $('#poster').html('<div class="alert"><strong>Oops!</strong> Try adding something into the search field.</div>');
 
@@ -49,15 +50,15 @@ $('#term').focus(function(){
             $('#poster').html('<div class="alert"><strong>Loading...</strong></div>');
 
             $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" + film + "&callback=?", function(json) {
-               if (json != "Nothing found."){                 
-console.log(json);
-                     $('#poster').html('<p>Your search found: <strong>' + json.results[0].title + '</strong></p><img src=\"http://image.tmdb.org/t/p/w500/' + json.results[0].poster_path + '\" class=\"img-responsive\" >');
-                  } else {
-                     $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=avengers&callback=?", function(json) {
+              if (json !== "Nothing found."){                 
+                console.log(json);
+                $('#poster').html('<p>Your search found: <strong>' + json.results[0].title + '</strong></p><img src=\"http://image.tmdb.org/t/p/w500/' + json.results[0].poster_path + '\" class=\"img-responsive\" >');
+              } else {
+                $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=avengers&callback=?", function(json) {
                        
-                       console.log(json);
-                        $('#poster').html('<div class="alert"><p>We\'re afraid nothing was found for that search.</p></div><p>Perhaps you were looking for The Avengers?</p><img id="thePoster" src="http://image.tmdb.org/t/p/w500/' + json[0].poster_path + ' class="img-responsive" />');
-                     });
+                console.log(json);
+                $('#poster').html('<div class="alert"><p>We\'re afraid nothing was found for that search.</p></div><p>Perhaps you were looking for The Avengers?</p><img id="thePoster" src="http://image.tmdb.org/t/p/w500/' + json[0].poster_path + ' class="img-responsive" />');
+                    });
                   }
              });
 
@@ -67,8 +68,12 @@ console.log(json);
    }
 
    $('#search').click(getPoster);
+   $('#search').on('click', function() {
+    console.log("success")
+   })
+
    $('#term').keyup(function(event){
-       if(event.keyCode == 13){
+       if(event.keyCode === 13){
            getPoster();
        }
    });
@@ -88,4 +93,4 @@ console.log(json);
 //Send Email confirmation
 
 // parameters: service_id, template_id, template_parameters
-emailjs.send("default_service","upcoming_movies",{name: "James", movieTitle: "The Avengers", preferredTheater: "AMC 16 Metreon", preferredExperience: "IMAX"});
+// emailjs.send("default_service","upcoming_movies",{name: "James", movieTitle: "The Avengers", preferredTheater: "AMC 16 Metreon", preferredExperience: "IMAX"});
